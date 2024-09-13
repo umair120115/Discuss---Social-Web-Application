@@ -1,0 +1,22 @@
+
+# Ignore all .log files
+*.log
+
+# Ignore environment files
+.env
+
+# Ignore compiled files
+*.class
+*.pyc
+
+# Ignore node_modules directory (for Node.js projects)
+node_modules/
+
+# Ignore build and dist directories (for many frontend projects)
+build/
+dist/
+
+#Scripts of environment 
+discuss/
+media/
+Dockerfile
