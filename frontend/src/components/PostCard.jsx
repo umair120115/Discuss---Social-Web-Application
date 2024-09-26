@@ -46,7 +46,7 @@ function PostCard(){
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleLike(post)}>Like</Button>{post.like_count}
+        <Button size="small" onClick={()=>handleLike(post)}>Like</Button>{post.like_count}
         
         
       </CardActions>

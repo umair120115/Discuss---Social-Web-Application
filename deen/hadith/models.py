@@ -46,6 +46,37 @@ class AppUser(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         return True
+    
+class Profile(models.Model):
+    user=models.ForeignKey(AppUser,related_name='user_profile',on_delete=models.CASCADE)
+    profile_photo=models.ImageField(upload_to='profile_photo')
+    bio=models.TextField(blank=True,null=True)
+    education=models.CharField(max_length=200)
+
+class FriendRequest(models.Model):
+    from_user=models.ForeignKey(AppUser,related_name='friend_request_send',on_delete=models.CASCADE)
+    to_user=models.ForeignKey(AppUser,related_name='friend_request_got',on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+    accepted=models.BooleanField(default=False)
+
+    def __str__(self):
+        return  f"Friend Request from {self.from_user} to {self.to_user}"
+    
+    class Meta:
+        unique_together=('from_user','to_user')
+
+class Friendship(models.Model):
+    user = models.ForeignKey(AppUser, related_name='friendships', on_delete=models.CASCADE)
+    friend = models.ForeignKey(AppUser, related_name='friends_with', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'friend')
+
+    def __str__(self):
+        return f"{self.user} is friends with {self.friend}"
+    
+
 
 
 class Post(models.Model):

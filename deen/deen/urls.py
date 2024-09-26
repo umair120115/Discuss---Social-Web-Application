@@ -26,11 +26,16 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("hadith-auth/", include("rest_framework.urls")),
     path("hadith/token/", TokenObtainPairView.as_view(), name="access"),
-    path("hadith/refresh/token", TokenRefreshView.as_view(), name="refresh"),
+    path("hadith/refresh/token/", TokenRefreshView.as_view(), name="refresh"),
     path("hadith/user/register/", UserView.as_view(), name="register"),
     path("hadith/posts/", PostView.as_view(), name="posts"),
     path('hadith/posts/<int:pk>/like_post/',like_post,name="like_post"),
     path("hadith/post/<int:post_id>/comment/", CommentView.as_view(), name="comment"),
+    path('hadith/user/<int:pk>/update/',UpdateDelete.as_view(),name='user-update'),
+    path('hadith/users/',Users.as_view(),name='users'),
+path('hadith/request/<int:user_id>/friend/', send_friend_request_view, name='send-friend-request'),
+path('hadith/requests/',RequestView.as_view(),name='requests'),
+    # path(),
     
 ]
 if settings.DEBUG:

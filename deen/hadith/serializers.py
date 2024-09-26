@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AppUser, Post, Comment
+from .models import AppUser, Post, Comment,FriendRequest
 
 
 
@@ -12,6 +12,19 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = AppUser.objects.create_user(**validated_data)
         return user
+
+class FriendRequestSerializer(serializers.ModelSerializer):
+    sender=serializers.SerializerMethodField()
+    reciever=serializers.SerializerMethodField()
+    class Meta:
+        model=FriendRequest
+        fields=['id','from_user','to_user','created_at','accepted','sender','reciever']
+        extra_kwargs={"from_user":{"read_only":True},"to_user":{"read_only":True}}
+
+    def get_sender(self,obj):
+        return obj.from_user.Name
+    def get_reciever(self,obj):
+        return obj.to_user.Name
 
 
 class PostSerializer(serializers.ModelSerializer):

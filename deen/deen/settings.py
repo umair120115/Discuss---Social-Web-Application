@@ -36,6 +36,8 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -78,6 +80,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "deen.wsgi.application"
+ASGI_APPLICATION='deen.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # Redis running on localhost
+        },
+    },
+}
 
 
 # Database
@@ -138,6 +149,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "hadith.AppUser"
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://192.168.1.5:3000',  # React app running on your PC
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
